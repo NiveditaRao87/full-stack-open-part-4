@@ -1,0 +1,6 @@
+PATCH http://localhost:3003/api/blogs/5f2087769c16042b4c5e1623
+Content-Type: application/json
+
+{
+  "likes": 5005
+}

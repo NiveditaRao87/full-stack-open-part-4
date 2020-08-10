@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "I love coding",
+  "author": "Nivedita Rao",
+  "url": "https://www.andalsoproblemsolving.com",
+  "likes": 0,
+  "userId": "5f2dd4a4a12ffb2920bff3eb"
+}
