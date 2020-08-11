@@ -211,12 +211,12 @@ test('dummy returns one', () => {
 
 describe('total likes', () => {
 
-  test('of empty list is zero', () => {
+  test('of an empty list is zero', () => {
     const result = listHelper.totalLikes(emptyList)
     expect(result).toBe(0)
   })
 
-  test('when list has only one blog equals the likes of that', () => {
+  test('when list has only one blog equals the likes of that blog', () => {
     const result = listHelper.totalLikes(listWithOneBlog)
     expect(result).toBe(5)
   })
@@ -229,12 +229,12 @@ describe('total likes', () => {
 
 describe('favourite blog',() => {
 
-  test('of empty list is -blog list is empty-', () => {
+  test('of an empty list is -blog list is empty-', () => {
     const result = listHelper.favouriteBlog(emptyList)
     expect(result).toMatch('blog list is empty')
   })
 
-  test('when list has only one blog, it is the favourite blog', () => {
+  test('when list has only one blog, is the favourite blog', () => {
     const result = listHelper.favouriteBlog(listWithOneBlog)
     expect(result).toEqual({
       title: 'Go To Statement Considered Harmful',
@@ -270,7 +270,7 @@ describe('favourite blog',() => {
 })
 
 describe('most blogs',() => {
-  test('of empty list is -blog list is empty-', () => {
+  test('of an empty list is -blog list is empty-', () => {
     const result = listHelper.mostBlogs(emptyList)
     expect(result).toMatch('blog list is empty')
   })
@@ -307,12 +307,12 @@ describe('most blogs',() => {
 })
 
 describe('most likes',() => {
-  test('of empty list is -blog list is empty-', () => {
+  test('of an empty list is -blog list is empty-', () => {
     const result = listHelper.mostLikes(emptyList)
     expect(result).toMatch('blog list is empty')
   })
 
-  test('when list has only one blog, its author is the one with most likes', () => {
+  test('when list has only one blog, is its author', () => {
     const result = listHelper.mostLikes(listWithOneBlog)
     expect(result).toEqual({
       author: 'Edsger W. Dijkstra',
