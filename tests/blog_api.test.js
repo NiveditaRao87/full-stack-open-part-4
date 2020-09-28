@@ -113,7 +113,8 @@ describe('creation of a new blog entry', () => {
 
     const newBlog = {
       author: 'Anonymous',
-      likes: 3939393
+      likes: 3939393,
+      title: 'Url is missing'
     }
 
     const response = await api
@@ -122,7 +123,7 @@ describe('creation of a new blog entry', () => {
       .set('Authorization', token)
       .expect(400)
 
-    expect(response.body.error).toContain('url and title are missing')
+    expect(response.body.error).toContain('url and title are required')
 
   })
   test('fails with status 401 if token is missing', async () => {
@@ -150,15 +151,11 @@ describe('updating likes of a specific blog', () => {
 
     const blogToUpdate = blogsAtStart[0]
 
-    const updateBlog = {
-      likes: blogToUpdate.likes + 1
-    }
-
     blogToUpdate.likes = blogToUpdate.likes + 1
 
     await api
-      .patch(`/api/blogs/${blogToUpdate.id}`)
-      .send(updateBlog)
+      .put(`/api/blogs/${blogToUpdate.id}`)
+      .send(blogToUpdate)
       .expect(200)
 
     const blogsAtEnd = await helper.blogsInDb()
@@ -174,6 +171,39 @@ describe('updating likes of a specific blog', () => {
       .expect(404)
   })
 
+})
+
+describe('adding comments to a blog', () => {
+  test('succeeds with status 201 when blog exists', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+
+    const blogToUpdate = blogsAtStart[0]
+
+    blogToUpdate.comment = 'This is a new comment to test adding comments'
+
+    await api
+      .post(`/api/blogs/${blogToUpdate.id}/comments`)
+      .send(blogToUpdate)
+      .expect(201)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    const comments = blogsAtEnd.find(b => b.id === blogToUpdate.id).comments.map(c => c.text)
+    expect(blogsAtEnd.length).toBe(blogsAtStart.length)
+    expect(comments).toContain('This is a new comment to test adding comments')
+  })
+  test('fails with statuscode 404 if blog does not exist', async () => {
+    const validNonexistingId = await helper.nonExistingId()
+
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToUpdate = blogsAtStart[0]
+
+    blogToUpdate.comment = 'This is a new comment to test adding comments'
+
+    await api
+      .post(`/api/blogs/${validNonexistingId}/comments`)
+      .send(blogToUpdate)
+      .expect(404)
+  })
 })
 
 describe('deletion of a blog', () => {
