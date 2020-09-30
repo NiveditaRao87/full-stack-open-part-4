@@ -70,7 +70,7 @@ blogsRouter.post('/:id/comments', async (request, response) => {
   const { comment } = request.body
   blog.comments = [...blog.comments,{ text: comment }]
   const savedBlog = await blog.save()
-  response.status(201).send(savedBlog)
+  response.status(201).json(savedBlog)
 })
 
 module.exports = blogsRouter
